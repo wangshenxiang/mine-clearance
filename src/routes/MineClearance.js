@@ -1,8 +1,16 @@
 import React from 'react';
 import {connect} from 'dva';
 import MineClearancePoint from '../components/MineClearancePoint';
+import MineClearanceSet from "../components/MineClearanceSet";
 
 const MineClearance = ({dispatch, mineClearance}) => {
+  function handleReset(length, width) {
+    dispatch({
+      type: 'mineClearance/reset',
+      payload: {length, width},
+    });
+  }
+
   function handleLeftClick(index) {
     dispatch({
       type: 'mineClearance/leftClick',
@@ -24,16 +32,48 @@ const MineClearance = ({dispatch, mineClearance}) => {
     });
   }
 
+  function renderRow(rowNum) {
+    let itemArr = [];
+    for (let j = 0; j<mineClearance.mineMap[rowNum].length; ++j) {
+      itemArr.push(
+        <MineClearancePoint
+          onLeftClick={handleLeftClick}
+          onRightClick={handleRightClick}
+          onDoubleClick={handleDoubleClick}
+          point={mineClearance.mineMap[rowNum][j]}
+        />
+      );
+    }
+
+    return (
+      <div style={{display: 'inline'}}>
+        {itemArr}
+      </div>
+    );
+  }
+
+  function renderMineArea() {
+    let rowArr = [];
+    for (let i =0;i<mineClearance.mineMap.length; ++i) {
+      rowArr.push(renderRow(i));
+    }
+
+    return (
+      <div>
+        {rowArr}
+      </div>
+    );
+  }
+
   return (
     <div onContextMenu={(event) => {
       event.preventDefault()
     }}>
-      <MineClearancePoint
-        onLeftClick={handleLeftClick}
-        onRightClick={handleRightClick}
-        onDoubleClick={handleDoubleClick}
-        point={mineClearance.mineMap[0][0]}
+      <MineClearanceSet
+        onSetBtnClick={handleReset}
       />
+
+      {renderMineArea()}
     </div>
   );
 };

@@ -10,7 +10,7 @@ export default {
   namespace: 'mineClearance',
   state: [],
   reducers: {
-    'reset'(state, {payload}) {
+    'reset'(state, payload) {
       let stateCopy = deepCopy(state);
       const length = payload.length;
       const width = payload.width;
