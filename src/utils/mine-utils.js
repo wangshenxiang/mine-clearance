@@ -58,6 +58,10 @@ export function create(length, width, ratio) {
   return mineMap;
 }
 
+export function deepCopy(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
 export function openAll(mineMap) {
   for (let raw of mineMap) {
     for (let item of raw) {

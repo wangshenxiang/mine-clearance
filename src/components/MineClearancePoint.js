@@ -19,6 +19,7 @@ const MineClearancePoint = ({onLeftClick, onRightClick, onDoubleClick, point}) =
   } else if (point.status === MINE_STATUS_MARKED) {
     bgColor = '#00ffff';
   } else if (point.status === MINE_STATUS_OPEN) {
+    bgColor = '#ffffff';
     showNum = point.value !== IS_MINE && point !== 0;
     showBoom = point.value === IS_MINE;
   }
@@ -49,8 +50,9 @@ const MineClearancePoint = ({onLeftClick, onRightClick, onDoubleClick, point}) =
         onRightClick(point.index);
       }}
     >
-      {showNum ? point.value : "0"}
-      {showBoom ? 'x' : "0"}
+      {showNum ? point.value : 0}
+      {showBoom ? 'x' : 0}
+
     </span>
   );
 };

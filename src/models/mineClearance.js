@@ -1,4 +1,4 @@
-import {create, openAll, openAuto, openSmart} from '../utils/mine-utils';
+import {create, openAll, openAuto, openSmart, deepCopy} from '../utils/mine-utils';
 import {
   MINE_STATUS_CLOSE,
   MINE_STATUS_OPEN,
@@ -11,62 +11,64 @@ export default {
   state: [],
   reducers: {
     'reset'(state, {payload}) {
+      let stateCopy = deepCopy(state);
       const length = payload.length;
       const width = payload.width;
-      const ratio = state.ratio;
-      state.length = length;
-      state.width = width;
-      state.mineMap = create(length, width, ratio);
-      return state;
+      const ratio = stateCopy.ratio;
+      stateCopy.length = length;
+      stateCopy.width = width;
+      stateCopy.mineMap = create(length, width, ratio);
+      return stateCopy;
     },
 
     'leftClick'(state, {payload: index}) {
-      console.log(state);
-      console.log(index);
-      let point = state.mineMap[index[0]][index[1]];
+      let stateCopy = deepCopy(state);
+      let point = stateCopy.mineMap[index[0]][index[1]];
       if (point.status === MINE_STATUS_CLOSE) {
         if (point.value === IS_MINE) {
-          openAll(state.mineMap);
-          return state;
+          openAll(stateCopy.mineMap);
+          return stateCopy;
         }
 
         if (point.value === 0) {
-          openAuto(state.mineMap, index);
-          return state;
+          openAuto(stateCopy.mineMap, index);
+          return stateCopy;
         }
 
-        state.mineMap[index[0]][index[1]].status = MINE_STATUS_OPEN;
-        return state;
+        stateCopy.mineMap[index[0]][index[1]].status = MINE_STATUS_OPEN;
+        return stateCopy;
       }
 
       if (point.status === MINE_STATUS_MARKED) {
-        state.mineMap[index[0]][index[1]].status = MINE_STATUS_CLOSE;
-        return state;
+        stateCopy.mineMap[index[0]][index[1]].status = MINE_STATUS_CLOSE;
+        return stateCopy;
       }
 
-      return state;
+      return stateCopy;
     },
 
     'rightClick'(state, {payload: index}) {
-      let point = state.mineMap[index[0]][index[1]];
+      let stateCopy = deepCopy(state);
+      let point = stateCopy.mineMap[index[0]][index[1]];
 
       if (point.status === MINE_STATUS_CLOSE) {
-        state.mineMap[index[0]][index[1]].status = MINE_STATUS_MARKED;
-        return state;
+        stateCopy.mineMap[index[0]][index[1]].status = MINE_STATUS_MARKED;
+        return stateCopy;
       }
 
-      return state;
+      return stateCopy;
     },
 
     'doubleClick'(state, {payload: index}) {
-      let point = state.mineMap[index[0]][index[1]];
+      let stateCopy = deepCopy(state);
+      let point = stateCopy.mineMap[index[0]][index[1]];
 
       if (point.status === MINE_STATUS_OPEN && point.value !== IS_MINE) {
-        openSmart(state.mineMap, index);
-        return state;
+        openSmart(stateCopy.mineMap, index);
+        return stateCopy;
       }
 
-      return state;
+      return stateCopy;
     }
   },
 };

@@ -26,7 +26,6 @@ const MineClearance = ({dispatch, mineClearance}) => {
 
   return (
     <div onContextMenu={(event) => {
-      console.log("onContextMenu main");
       event.preventDefault()
     }}>
       <MineClearancePoint
