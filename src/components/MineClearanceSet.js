@@ -17,7 +17,7 @@ const MineClearanceSet = ({onSetBtnClick}) => {
 };
 
 MineClearanceSet.propTypes = {
-  onSetBtnClick: PropTypes.func.onSetBtnClick,
+  onSetBtnClick: PropTypes.func.isRequired,
 };
 
 export default MineClearanceSet;

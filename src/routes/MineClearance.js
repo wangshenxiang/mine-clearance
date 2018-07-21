@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'dva';
 import MineClearancePoint from '../components/MineClearancePoint';
 import MineClearanceSet from "../components/MineClearanceSet";
+import { Row, Col } from 'antd';
 
 const MineClearance = ({dispatch, mineClearance}) => {
   function handleReset(length, width) {
@@ -34,7 +35,7 @@ const MineClearance = ({dispatch, mineClearance}) => {
 
   function renderRow(rowNum) {
     let itemArr = [];
-    for (let j = 0; j<mineClearance.mineMap[rowNum].length; ++j) {
+    for (let j = 0; j < mineClearance.mineMap[rowNum].length; ++j) {
       itemArr.push(
         <MineClearancePoint
           onLeftClick={handleLeftClick}
@@ -46,15 +47,17 @@ const MineClearance = ({dispatch, mineClearance}) => {
     }
 
     return (
-      <div style={{display: 'inline'}}>
-        {itemArr}
-      </div>
+      <Row>
+        <div style={{display: 'inline'}}>
+          {itemArr}
+        </div>
+      </Row>
     );
   }
 
   function renderMineArea() {
     let rowArr = [];
-    for (let i =0;i<mineClearance.mineMap.length; ++i) {
+    for (let i = 0; i < mineClearance.mineMap.length; ++i) {
       rowArr.push(renderRow(i));
     }
 
