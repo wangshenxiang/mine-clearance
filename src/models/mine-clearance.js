@@ -20,13 +20,13 @@ export default {
             return state;
         },
 
-        'leftClick'(state, { payload:index }) {
+        'leftClick'(state, { payload: index }) {
             let point = state.mineMap[index[0]][index[1]];
             if (point.status == MINE_STATUS_CLOSE) {
                 if (point.value == IS_MINE) {
                     openAll(state.mineMap);
                     return state;
-                } 
+                }
 
                 if (point.value == 0) {
                     openAuto(state.mineMap, index);
@@ -36,18 +36,18 @@ export default {
                 state.mineMap[index[0]][index[1]].status = MINE_STATUS_OPEN;
                 return state;
             }
-            
+
             if (point.status == MINE_STATUS_MARKED) {
                 state.mineMap[index[0]][index[1]].status = MINE_STATUS_CLOSE;
                 return state;
             }
-            
+
             return state;
         },
 
-        'rightClick'(state, { payload:index }) {
+        'rightClick'(state, { payload: index }) {
             let point = state.mineMap[index[0]][index[1]];
-            
+
             if (point.status == MINE_STATUS_CLOSE) {
                 state.mineMap[index[0]][index[1]].status = MINE_STATUS_MARKED;
                 return state;
@@ -56,9 +56,9 @@ export default {
             return state;
         },
 
-        'doubleClick'(state, { payload:index }) {
+        'doubleClick'(state, { payload: index }) {
             let point = state.mineMap[index[0]][index[1]];
-            
+
             if (point.status == MINE_STATUS_OPEN && point.value != IS_MINE) {
                 openSmart(state.mineMap, index);
                 return state;
