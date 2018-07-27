@@ -1,84 +1,78 @@
-import PropTypes from 'prop-types';
 import {
   MINE_STATUS_CLOSE,
   MINE_STATUS_OPEN,
   MINE_STATUS_MARKED,
   IS_MINE
 } from '../utils/mine-constants';
-import React from "react";
+import React, { Component } from "react";
 import imgBoom from "../assets/icon/31.png";
 import imgNormal from "../assets/icon/11.png";
+import imgMarked from "../assets/icon/21.png";
 
-const MineClearancePoint = ({onLeftClick, onRightClick, onDoubleClick, point}) => {
+class MineClearancePoint extends Component {
+  constructor(props) {
+    super(props);
 
-  let clickTimeoutId;
-  let clickCnt = 0;
-  let bgColor = '#123456';
-  let showNum = false;
-  let showBoom = false;
-  if (point.status === MINE_STATUS_CLOSE) {
-    bgColor = '#000000';
-  } else if (point.status === MINE_STATUS_MARKED) {
-    bgColor = '#00ffff';
-  } else if (point.status === MINE_STATUS_OPEN) {
-    bgColor = '#ffffff';
-    showNum = point.value !== IS_MINE && point !== 0;
-    showBoom = point.value === IS_MINE;
+    this.state = {
+    };
   }
 
-  function renderBoom() {
+  render() {
+    let {onLeftClick, onRightClick, onDoubleClick, point} = this.props;
+
+    let clickTimeoutId;
+    let clickCnt = 0;
+    let showNum = false;
+    let showBoom = false;
+    let showMarked = false;
+    if (point.status === MINE_STATUS_CLOSE) {
+
+    } else if (point.status === MINE_STATUS_MARKED) {
+      showMarked = true;
+    } else if (point.status === MINE_STATUS_OPEN) {
+      showNum = point.value !== IS_MINE;
+      showBoom = point.value === IS_MINE;
+    }
+    let showNormal = !showMarked && !showNum && !showBoom;
+
+
     return (
-      <img src={imgBoom} />
-    );
-  }
+      <span
+        style={{
+          fontSize: 15,
+          textAlign: 'center'
+        }}
+        onClick={() => {
+          clickCnt++;
+          clearTimeout(clickTimeoutId);
 
-  function renderNormal() {
-    return (
-      <img src={imgNormal}/>
-    );
-  }
-
-  return (
-    <span
-      style={{
-        fontSize: 15,
-        textAlign: 'center'
-      }}
-      onClick={() => {
-        clickCnt++;
-        clearTimeout(clickTimeoutId);
-
-        if (clickCnt < 2) {
-          clickTimeoutId = setTimeout(() => {
-            onLeftClick(point.index);
+          if (clickCnt < 2) {
+            clickTimeoutId = setTimeout(() => {
+              onLeftClick(point.index);
+              clickCnt = 0;
+            }, 200);
+          } else if (clickCnt === 2) {
+            clickTimeoutId = setTimeout(() => {
+              onDoubleClick(point.index);
+              clickCnt = 0;
+            }, 200);
+          } else {
             clickCnt = 0;
-          }, 200);
-        } else if (clickCnt === 2) {
-          clickTimeoutId = setTimeout(() => {
-            onDoubleClick(point.index);
-            clickCnt = 0;
-          }, 200);
-        } else {
-          clickCnt = 0;
-        }
-      }}
-      onContextMenu={(event) => {
-        event.preventDefault();
-        onRightClick(point.index);
-      }}
-    >
-      {showNum ? point.value : ''}
-      {showBoom ? renderBoom() : ''}
-      {!showBoom && !showNum ? renderNormal() : ''}
+          }
+        }}
+        onContextMenu={(event) => {
+          event.preventDefault();
+          onRightClick(point.index);
+        }}
+      >
+
+      {showNum && point.value !== 0 ? point.value : ''}
+        {showBoom ? <img src={imgBoom}/> : ''}
+        {showMarked ? <img src={imgMarked}/> : ''}
+        {showNormal ? <img src={imgNormal}/> : ''}
     </span>
-  );
-};
-
-MineClearancePoint.propTypes = {
-  onLeftClick: PropTypes.func.isRequired,
-  onRightClick: PropTypes.func.isRequired,
-  onDoubleClick: PropTypes.func.isRequired,
-  point: PropTypes.object.isRequired,
-};
+    );
+  }
+}
 
 export default MineClearancePoint;

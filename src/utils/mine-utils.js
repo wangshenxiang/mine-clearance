@@ -13,7 +13,7 @@ function setMine(length, width, ratio) {
       let isMine = Math.random() < ratio;
       mineMapRow[j] = {
         index: [i, j],
-        value: isMine ? -1 : 0,
+        value: isMine ? IS_MINE : 0,
         status: MINE_STATUS_CLOSE
       };
     }
@@ -25,7 +25,7 @@ function setMine(length, width, ratio) {
 function calMine(mineMap, length, width) {
   for (let i = 0; i < length; i++) {
     for (let j = 0; j < width; j++) {
-      if (mineMap[i][j] === IS_MINE) {
+      if (mineMap[i][j].value === IS_MINE) {
         continue;
       }
       let cnt = 0;
@@ -80,6 +80,7 @@ export function openAuto(mineMap, index, historyIndexArr) {
   let i = index[0];
   let j = index[1];
   if (mineMap[i][j].value !== 0) {
+    mineMap[i][j].status = MINE_STATUS_OPEN;
     return;
   }
 

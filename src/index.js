@@ -17,7 +17,7 @@ const app = dva({
     mineClearance: {
       length: 1,
       width: 1,
-      ratio: 0.2, // 20%几率出雷
+      ratio: 0.1, // 10%几率出雷
       mineMap: [
         [
           {

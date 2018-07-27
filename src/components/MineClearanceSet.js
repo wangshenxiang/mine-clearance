@@ -9,9 +9,13 @@ const MineClearanceSet = ({onSetBtnClick}) => {
 
   return (
     <div>
-      长：<InputNumber min={1} max={10} defaultValue={length} onChange={value => length = value}/>
-      宽：<InputNumber min={1} max={10} defaultValue={width} onChange={value => width = value}/>
-      <Button type="primary" onClick={() => onSetBtnClick(length, width)}>确定</Button>
+      长：<InputNumber min={1} max={100} defaultValue={length} onChange={value => length = value}/>
+      宽：<InputNumber min={1} max={100} defaultValue={width} onChange={value => width = value}/>
+      <Button type="primary" onClick={() => {
+        onSetBtnClick(length, width);
+        length = 3;
+        width = 3;
+      }}>确定</Button>
     </div>
   );
 };
