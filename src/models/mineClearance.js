@@ -31,7 +31,7 @@ export default {
         }
 
         if (point.value === 0) {
-          openAuto(stateCopy.mineMap, index);
+          openAuto(stateCopy.mineMap, index, []);
           return stateCopy;
         }
 

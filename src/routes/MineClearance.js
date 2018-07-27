@@ -37,21 +37,21 @@ const MineClearance = ({dispatch, mineClearance}) => {
     let itemArr = [];
     for (let j = 0; j < mineClearance.mineMap[rowNum].length; ++j) {
       itemArr.push(
-        <MineClearancePoint
-          onLeftClick={handleLeftClick}
-          onRightClick={handleRightClick}
-          onDoubleClick={handleDoubleClick}
-          point={mineClearance.mineMap[rowNum][j]}
-        />
+        <td style={{width: 32, height: 32, textAlign: 'center'}}>
+          <MineClearancePoint
+            onLeftClick={handleLeftClick}
+            onRightClick={handleRightClick}
+            onDoubleClick={handleDoubleClick}
+            point={mineClearance.mineMap[rowNum][j]}
+          />
+        </td>
       );
     }
 
     return (
-      <Row>
-        <div style={{display: 'inline'}}>
-          {itemArr}
-        </div>
-      </Row>
+      <tr style={{marginTop:0, marginBottom: 0, border: 0}}>
+        {itemArr}
+      </tr>
     );
   }
 
@@ -62,9 +62,9 @@ const MineClearance = ({dispatch, mineClearance}) => {
     }
 
     return (
-      <div>
+      <table>
         {rowArr}
-      </div>
+      </table>
     );
   }
 

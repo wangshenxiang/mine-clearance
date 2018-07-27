@@ -73,7 +73,10 @@ export function openAll(mineMap) {
   }
 }
 
-export function openAuto(mineMap, index) {
+export function openAuto(mineMap, index, historyIndexArr) {
+  console.log(index);
+  console.log(historyIndexArr);
+  historyIndexArr.push(index);
   let i = index[0];
   let j = index[1];
   if (mineMap[i][j].value !== 0) {
@@ -81,14 +84,25 @@ export function openAuto(mineMap, index) {
   }
 
   mineMap[i][j].status = MINE_STATUS_OPEN;
-  isRowValid(mineMap, i - 1) && isColValid(mineMap, j - 1) && openAuto(mineMap, [i - 1, j - 1]);
-  isRowValid(mineMap, i - 1) && isColValid(mineMap, j - 0) && openAuto(mineMap, [i - 1, j - 0]);
-  isRowValid(mineMap, i - 1) && isColValid(mineMap, j + 1) && openAuto(mineMap, [i - 1, j + 1]);
-  isRowValid(mineMap, i - 0) && isColValid(mineMap, j - 1) && openAuto(mineMap, [i - 0, j - 1]);
-  isRowValid(mineMap, i - 0) && isColValid(mineMap, j + 1) && openAuto(mineMap, [i - 0, j + 1]);
-  isRowValid(mineMap, i + 1) && isColValid(mineMap, j - 1) && openAuto(mineMap, [i + 1, j - 1]);
-  isRowValid(mineMap, i + 1) && isColValid(mineMap, j - 0) && openAuto(mineMap, [i + 1, j - 0]);
-  isRowValid(mineMap, i + 1) && isColValid(mineMap, j + 1) && openAuto(mineMap, [i + 1, j + 1]);
+  !atHistory(historyIndexArr, [i - 1, j - 1]) && isRowValid(mineMap, i - 1) && isColValid(mineMap, j - 1) && openAuto(mineMap, [i - 1, j - 1], historyIndexArr);
+  !atHistory(historyIndexArr, [i - 1, j - 0]) && isRowValid(mineMap, i - 1) && isColValid(mineMap, j - 0) && openAuto(mineMap, [i - 1, j - 0], historyIndexArr);
+  !atHistory(historyIndexArr, [i - 1, j + 1]) && isRowValid(mineMap, i - 1) && isColValid(mineMap, j + 1) && openAuto(mineMap, [i - 1, j + 1], historyIndexArr);
+  !atHistory(historyIndexArr, [i - 0, j - 1]) && isRowValid(mineMap, i - 0) && isColValid(mineMap, j - 1) && openAuto(mineMap, [i - 0, j - 1], historyIndexArr);
+  !atHistory(historyIndexArr, [i - 0, j + 1]) && isRowValid(mineMap, i - 0) && isColValid(mineMap, j + 1) && openAuto(mineMap, [i - 0, j + 1], historyIndexArr);
+  !atHistory(historyIndexArr, [i + 1, j - 1]) && isRowValid(mineMap, i + 1) && isColValid(mineMap, j - 1) && openAuto(mineMap, [i + 1, j - 1], historyIndexArr);
+  !atHistory(historyIndexArr, [i + 1, j - 0]) && isRowValid(mineMap, i + 1) && isColValid(mineMap, j - 0) && openAuto(mineMap, [i + 1, j - 0], historyIndexArr);
+  !atHistory(historyIndexArr, [i + 1, j + 1]) && isRowValid(mineMap, i + 1) && isColValid(mineMap, j + 1) && openAuto(mineMap, [i + 1, j + 1], historyIndexArr);
+}
+
+function atHistory(historyIndexArr, index) {
+  let result = false;
+  historyIndexArr.map((item, i) => {
+    if (item[0] === index[0] && item[1] === index[1]) {
+      result = true;
+    }
+    return;
+  });
+  return result;
 }
 
 export function openSmart(mineMap, index) {

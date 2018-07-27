@@ -6,6 +6,8 @@ import {
   IS_MINE
 } from '../utils/mine-constants';
 import React from "react";
+import imgBoom from "../assets/icon/31.png";
+import imgNormal from "../assets/icon/11.png";
 
 const MineClearancePoint = ({onLeftClick, onRightClick, onDoubleClick, point}) => {
 
@@ -24,9 +26,24 @@ const MineClearancePoint = ({onLeftClick, onRightClick, onDoubleClick, point}) =
     showBoom = point.value === IS_MINE;
   }
 
+  function renderBoom() {
+    return (
+      <img src={imgBoom} />
+    );
+  }
+
+  function renderNormal() {
+    return (
+      <img src={imgNormal}/>
+    );
+  }
+
   return (
     <span
-      style={{fontSize: 100, width: 100, height: 100, border: 1, borderColor: '#FFFFFF', backgroundColor: bgColor}}
+      style={{
+        fontSize: 15,
+        textAlign: 'center'
+      }}
       onClick={() => {
         clickCnt++;
         clearTimeout(clickTimeoutId);
@@ -50,9 +67,9 @@ const MineClearancePoint = ({onLeftClick, onRightClick, onDoubleClick, point}) =
         onRightClick(point.index);
       }}
     >
-      {showNum ? point.value : 0}
-      {showBoom ? 'x' : 0}
-
+      {showNum ? point.value : ''}
+      {showBoom ? renderBoom() : ''}
+      {!showBoom && !showNum ? renderNormal() : ''}
     </span>
   );
 };
