@@ -11,7 +11,11 @@
     "babel-plugin-import": "^1.8.0",
     "dva": "^2.3.1",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-ace": "^6.1.4",
+    "copy-to-clipboard": "^3.0.8",
+    "react-json-view": "^1.19.1",
+    "react-json-pretty": "^1.7.9"
   },
   "devDependencies": {
     "babel-plugin-dva-hmr": "^0.3.2",

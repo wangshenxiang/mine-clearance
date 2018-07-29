@@ -1,0 +1,24 @@
+
+.pan {
+  height: 100%;
+  width: 100%;
+  font-family: menlo, monospace, Tahoma, "微软雅黑", "幼圆";
+  font-size: 15px;
+}
+
+.menu {
+  height: 55px;
+  width: 100%;
+  border-bottom: 1px solid #e9e9e9;
+}
+
+.menuIcon {
+  font-size: 15px;
+  color: #6e6e6e;
+  margin: 20px 30px 20px 30px;
+}
+
+.targetPan {
+  font-size: 11px;
+
+}
